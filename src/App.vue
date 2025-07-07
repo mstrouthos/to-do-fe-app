@@ -2,6 +2,11 @@
   <div id="app">
     <h1>To Do App</h1>
     
+    <filters
+      @filter="filterTasks"
+    > 
+    </filters>
+
     <add-task
       @create-task="createTask"
     ></add-task>
@@ -11,7 +16,7 @@
     </div>
 
     <task 
-      v-for="task in this.tasks"
+      v-for="task in this.filteredTasks"
       :key="task.id"
       :id="task.id"
       :desc="task.description"
@@ -26,21 +31,33 @@
 <script>
 import AddTask from './AddTask.vue';
 import Task from './Task.vue';
+import Filters from './Filters.vue'
 
 export default {
   name: 'App',
   components: {
     AddTask,
+    Filters,
     Task
   },
 
   data() {
     return {
-      tasks: []
+      tasks: [],
+      filterBy: 'all'
     }
   },
 
   computed: {
+    filteredTasks() {
+      if (this.filterBy === 'all') {
+        return this.tasks;
+      }
+
+      return this.tasks.filter((task) => {
+        return task.status === this.filterBy;
+      });
+    },
     tasksEmpty() {
       return this.tasks.length === 0;
     }
@@ -64,6 +81,10 @@ export default {
       if (task) {
         task.status = 'completed';
       }
+    },
+
+    filterTasks(filterBy) {
+      this.filterBy = filterBy;
     }
   }
 };

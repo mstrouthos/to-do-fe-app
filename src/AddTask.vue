@@ -30,7 +30,9 @@
     }
 
     .filter input {
-        padding: 10px 15px;
+        width: 400px;
+        max-width: 100%;
+        padding: 12px 15px;
         border: none;
         border-radius: 8px;
         background: rgba(255, 255, 255, 0.7);

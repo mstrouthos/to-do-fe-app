@@ -3,6 +3,11 @@
         <span>
             {{ this.localDescription }}
         </span>
+        <div class="complete">
+            <button class="complete-button" :class="{'completed': isComplete}" @click="markTaskCompleted">
+                <font-awesome-icon icon="check" />
+            </button>
+        </div>
         <div class="delete">
             <button class="delete-button" @click="deleteTask">
                 <font-awesome-icon icon="trash" />
@@ -15,7 +20,17 @@
 export default {
     name: 'Task',
     props: {
+        id: {
+            type: String,
+            required: true
+        },
+
         desc: {
+            type: String,
+            required: true
+        },
+
+        status: {
             type: String,
             required: true
         }
@@ -27,9 +42,19 @@ export default {
         }
     },
 
+    computed: {
+        isComplete() {
+            return this.status === 'completed';
+        }
+    },
+
     methods: {
         deleteTask() {
-            this.$emit('delete-task', this.localDescription);
+            this.$emit('delete-task', this.id);
+        },
+
+        markTaskCompleted() {
+            this.$emit('task-completed', this.id);
         }
     }
 };
@@ -55,16 +80,15 @@ export default {
         align-items: center;
     }
 
-    .delete {
+    .complete {
         margin-left: auto;
     }
 
-    .delete-button {
+    .complete-button, .delete-button {
         width: 45px;
         height: 45px;
         border: none;
         border-radius: 40%;
-        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
         color: white;
         font-size: 16px;
         cursor: pointer;
@@ -74,6 +98,26 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    .complete-button {
+        background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+    }
+
+    .complete-button:hover {
+        box-shadow: 
+            0 8px 25px rgba(156, 163, 175, 0.2),
+            0 4px 12px rgba(0, 0, 0, 0.05),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+    }
+
+    .complete-button.completed {
+        background: linear-gradient(135deg, #4ade80, #22c55e);
+    }
+
+    .delete-button {
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
     }
 
     .delete-button:hover {

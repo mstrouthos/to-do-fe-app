@@ -1,20 +1,26 @@
 <template>
   <div id="app">
     <h1>To Do App</h1>
+    
     <add-task
       @create-task="createTask"
     ></add-task>
+    
     <div class="empty" v-if="tasksEmpty">
       <span>You have no tasks</span>
     </div>
 
     <task 
       v-for="task in this.tasks"
-      :key="task"
-      :desc="task"
+      :key="task.id"
+      :id="task.id"
+      :desc="task.description"
+      :status="task.status"
       @delete-task="deleteTask"
+      @task-completed="markTaskCompleted"
     />
   </div>
+
 </template>
 
 <script>
@@ -42,13 +48,22 @@ export default {
 
   methods: {
     createTask(description) {
-      this.tasks.push(description);
+      this.tasks.push({'id': Date.now(), 'description': description, 'status': 'incomplete'});
     },
 
-    deleteTask(description) {
+    deleteTask(taskId) {
       this.tasks = this.tasks.filter((task) => {
-        return task !== description;
+        return task.id !== taskId;
       });
+    },
+
+    markTaskCompleted(taskId) {
+      const task = this.tasks.find(t => t.id === taskId);
+      console.log(task);
+
+      if (task) {
+        task.status = 'completed';
+      }
     }
   }
 };
@@ -63,6 +78,14 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  background-color: #f1f3f4;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 30px;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
   .empty {
@@ -73,7 +96,7 @@ export default {
       margin-right: auto;
       gap: 15px;
       padding: 20px;
-      background: linear-gradient(135deg, #a4cbf3 0%, #c3cfe2 100%);
+      background: linear-gradient(135deg, #e6f0fb 0%, #c3cfe2 100%);
       border-radius: 12px;
       box-shadow: 
           0 8px 32px rgba(0, 0, 0, 0.1),

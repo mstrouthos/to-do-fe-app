@@ -48,14 +48,14 @@
     }
 
     .incomplete-button {
-        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+        background: linear-gradient(135deg, #ff9500 0%, #ff8c00 100%);
     }
 
     .incomplete-button.active {
-        box-shadow: 0 0 5px rgba(238, 90, 82, 0.6), 0 0 10px rgba(238, 90, 82, 0.4);
+        box-shadow: 0 0 5px rgba(255, 140, 0, 0.6), 0 0 10px rgba(255, 140, 0, 0.4);
         transform: scale(1.05);
     }
-
+    
     .all-button {
         background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
     }

@@ -1,5 +1,5 @@
 <template>
-    <div class="task">
+    <div class="task" :class="{'complete': isComplete}">
         <span>
             {{ this.localDescription }}
         </span>
@@ -78,6 +78,10 @@ export default {
         border: 1px solid rgba(255, 255, 255, 0.2);
         backdrop-filter: blur(10px);
         align-items: center;
+    }
+
+    .task.complete {
+        background: linear-gradient(135deg, #4ade80, #22c55e);
     }
 
     .complete {

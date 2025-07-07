@@ -1,7 +1,11 @@
 <template>
     <div class="actions">
         <div class="filter">
-            <input v-model="description" placeholder="Describe your task" />
+            <input 
+                v-model="description" 
+                placeholder="Describe your task" 
+                @keyup.enter="createTask"
+            />
         </div>
         <div class="create">
             <button @click="createTask" class="add-btn">+</button>
@@ -111,6 +115,7 @@ export default {
     methods: {
         createTask() {
             this.$emit('create-task', this.description);
+            this.description = '';
         }
     }
 }

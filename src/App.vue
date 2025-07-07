@@ -11,8 +11,8 @@
       @create-task="createTask"
     ></add-task>
     
-    <div class="empty" v-if="tasksEmpty">
-      <span>You have no tasks</span>
+    <div class="empty" v-if="filteredTasksEmpty">
+      <span>There are no tasks in this list.</span>
     </div>
 
     <task 
@@ -58,8 +58,9 @@ export default {
         return task.status === this.filterBy;
       });
     },
-    tasksEmpty() {
-      return this.tasks.length === 0;
+
+    filteredTasksEmpty() {
+      return this.filteredTasks.length === 0;
     }
   },
 

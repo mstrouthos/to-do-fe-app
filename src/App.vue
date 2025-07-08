@@ -23,6 +23,7 @@
       :status="task.status"
       @delete-task="deleteTask"
       @task-completed="markTaskCompleted"
+      @update-task="updateTask"
     />
   </div>
 
@@ -70,7 +71,7 @@ export default {
   methods: {
     createTask(description) {
       const newTask = {
-        'id': Date.now(), 
+        'id': Date.now().toString(), 
         'description': description, 
         'status': 'incomplete'
       };
@@ -90,6 +91,18 @@ export default {
       const updatedTasks = this.tasks.map(task => {
         if (task.id === taskId) {
           return { ...task, status: 'completed' };
+        }
+
+        return task;
+      });
+
+      this.$store.commit('SET_TASKS', updatedTasks);
+    },
+
+    updateTask(taskId, newDescription) {
+      const updatedTasks = this.tasks.map(task => {
+        if (task.id === taskId) {
+          return { ...task, description: newDescription };
         }
 
         return task;

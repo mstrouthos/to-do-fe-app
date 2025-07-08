@@ -8,7 +8,9 @@
             />
         </div>
         <div class="create">
-            <button @click="createTask" class="add-btn">+</button>
+            <button @click="createTask" class="add-btn">
+                <font-awesome-icon icon="plus" />
+            </button>
         </div>
     </div>
 </template>

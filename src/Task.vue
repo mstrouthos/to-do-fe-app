@@ -1,8 +1,21 @@
 <template>
     <div class="task" :class="{'complete': isComplete}">
-        <span>
-            {{ this.localDescription }}
-        </span>
+        <button v-if="!editMode" class="edit-button" @click="setEditMode">
+            <font-awesome-icon icon="edit" />
+        </button>
+    
+        <div class="edit-section" v-if="editMode">
+            <input class="edit" placeholder="Task description" v-model="localDescription">
+            <button class="save-button" @click="updateTask">
+                <font-awesome-icon icon="floppy-disk" />
+            </button>
+        </div>
+        <div v-else>
+            <span>
+                {{ this.localDescription }}
+            </span>
+        </div>
+        
         <div class="complete">
             <button class="complete-button" :class="{'completed': isComplete}" @click="markTaskCompleted">
                 <font-awesome-icon icon="check" />
@@ -38,6 +51,7 @@ export default {
 
     data() {
         return {
+            editMode: false,
             localDescription: this.desc
         }
     },
@@ -53,8 +67,17 @@ export default {
             this.$emit('delete-task', this.id);
         },
 
+        setEditMode() {
+            this.editMode = true;
+        },
+
         markTaskCompleted() {
             this.$emit('task-completed', this.id);
+        },
+
+        updateTask() {
+            this.$emit('update-task', this.id, this.localDescription);
+            this.editMode = false;
         }
     }
 };
@@ -88,7 +111,7 @@ export default {
         margin-left: auto;
     }
 
-    .complete-button, .delete-button {
+    .complete-button, .delete-button, .edit-button, .save-button {
         width: 45px;
         height: 45px;
         border: none;
@@ -138,5 +161,57 @@ export default {
             0 8px 25px rgba(255, 107, 107, 0.5),
             0 4px 12px rgba(0, 0, 0, 0.15),
             0 0 0 3px rgba(255, 107, 107, 0.3);
+    }
+
+    .edit-button {
+        background: linear-gradient(135deg, #93c5fd 0%, #3b82f6 100%);
+    }
+
+    .edit-button:hover {
+        box-shadow: 
+            0 8px 25px rgba(147, 197, 253, 0.2),
+            0 4px 12px rgba(0, 0, 0, 0.05),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
+    }
+
+    .edit-button:active {
+        outline: none;
+        box-shadow: 
+            0 8px 25px rgba(147, 197, 253, 0.5),
+            0 4px 12px rgba(0, 0, 0, 0.15),
+            0 0 0 3px rgba(147, 197, 253, 0.3);
+    }
+
+    .edit-section {
+        display: flex;
+        gap: 10px;
+    }
+
+    .edit-section input {
+        width: 400px;
+        max-width: 100%;
+        padding: 12px 15px;
+        border: none;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.7);
+        box-shadow: 
+            inset 0 2px 4px rgba(0, 0, 0, 0.1),
+            0 1px 2px rgba(255, 255, 255, 0.5);
+        font-size: 14px;
+        color: #333;
+        transition: all 0.3s ease;
+    }
+
+    .edit-section input:focus {
+        outline: none;
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 
+            inset 0 2px 4px rgba(0, 0, 0, 0.15),
+            0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+
+    .edit-section input::placeholder {
+        color: #888;
     }
 </style>

@@ -77,7 +77,6 @@ export default {
 
     markTaskCompleted(taskId) {
       const task = this.tasks.find(t => t.id === taskId);
-      console.log(task);
 
       if (task) {
         task.status = 'completed';

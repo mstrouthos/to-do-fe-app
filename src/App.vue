@@ -85,6 +85,7 @@ export default {
       });
       
       this.$store.commit('SET_TASKS', updatedTasks);
+      this.$toast.success("Task deleted successfully");
     },
 
     markTaskCompleted(taskId) {
@@ -109,6 +110,7 @@ export default {
       });
 
       this.$store.commit('SET_TASKS', updatedTasks);
+      this.$toast.success("Task has been updated");
     },
 
     filterTasks(filterBy) {

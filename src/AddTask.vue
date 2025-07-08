@@ -114,10 +114,20 @@ export default {
         };
     },
 
+    computed: {
+        descriptionIsValid() {
+            return this.description != '' && this.description != null;
+        }
+    },
+
     methods: {
         createTask() {
-            this.$emit('create-task', this.description);
-            this.description = '';
+            if (!this.descriptionIsValid) {
+                this.$toast.error("Please enter a description for your task");
+            } else {
+                this.$emit('create-task', this.description);
+                this.description = '';
+            }
         }
     }
 }

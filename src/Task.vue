@@ -163,11 +163,11 @@ export default {
             0 0 0 3px rgba(255, 107, 107, 0.3);
     }
 
-    .edit-button {
+    .edit-button, .save-button {
         background: linear-gradient(135deg, #93c5fd 0%, #3b82f6 100%);
     }
 
-    .edit-button:hover {
+    .edit-button:hover, .save-button:hover {
         box-shadow: 
             0 8px 25px rgba(147, 197, 253, 0.2),
             0 4px 12px rgba(0, 0, 0, 0.05),
@@ -175,7 +175,7 @@ export default {
         background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
     }
 
-    .edit-button:active {
+    .edit-button:active, .save-button:active {
         outline: none;
         box-shadow: 
             0 8px 25px rgba(147, 197, 253, 0.5),

@@ -43,12 +43,15 @@ export default {
 
   data() {
     return {
-      tasks: [],
       filterBy: 'all'
     }
   },
 
   computed: {
+    tasks() {
+      return this.$store.state.tasks;
+    },
+
     filteredTasks() {
       if (this.filterBy === 'all') {
         return this.tasks;
@@ -66,21 +69,33 @@ export default {
 
   methods: {
     createTask(description) {
-      this.tasks.push({'id': Date.now(), 'description': description, 'status': 'incomplete'});
+      const newTask = {
+        'id': Date.now(), 
+        'description': description, 
+        'status': 'incomplete'
+      };
+
+      this.$store.commit('SET_TASKS', [...this.tasks, newTask]);
     },
 
     deleteTask(taskId) {
-      this.tasks = this.tasks.filter((task) => {
+      const updatedTasks = this.tasks.filter((task) => {
         return task.id !== taskId;
       });
+      
+      this.$store.commit('SET_TASKS', updatedTasks);
     },
 
     markTaskCompleted(taskId) {
-      const task = this.tasks.find(t => t.id === taskId);
+      const updatedTasks = this.tasks.map(task => {
+        if (task.id === taskId) {
+          return { ...task, status: 'completed' };
+        }
 
-      if (task) {
-        task.status = 'completed';
-      }
+        return task;
+      });
+
+      this.$store.commit('SET_TASKS', updatedTasks);
     },
 
     filterTasks(filterBy) {
